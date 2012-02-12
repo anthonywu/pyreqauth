@@ -8,7 +8,8 @@ def get_user():
         }
 
 def unauthorized():
-    bottle.response = 403
+    bottle.response.status = 403
+    return "You can't access this resource"
 
 # One-Liner: declare how you want to get your user and how you'd like to handle unauthorized access
 require_user = RequireAuth(get_user, unauthorized)
