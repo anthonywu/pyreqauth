@@ -43,3 +43,11 @@ def user_account_oldschool(resource_id):
     else:
         bottle.response = 403
 
+bottle.debug()
+bottle.run(host="localhost", port=8888, server="auto")
+
+# after starting the server, visit
+#  - http://localhost:8888/
+#  - http://localhost:8888/magic/resource/123
+#  - http://localhost:8888/nomagic/resource/123
+#  - http://localhost:8888/rejected
