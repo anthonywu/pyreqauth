@@ -34,9 +34,12 @@ mock_no_user = RequireAuth(mock_get_no_user, unauthorized)
 def no_user_account(user):
     return "This flow will never be called"
 
+# Usually you'd do something like this:
 @bottle.get('/nomagic/resource/<resource_id>')
 def user_account_oldschool(resource_id):
     user = get_user() # this step is automatically handled in user_account above
-    return "%s - isn't this tedious?" % user["name"]
+    if user:
+        return "%s - isn't this tedious?" % user["name"]
+    else:
+        bottle.response = 403
 
-bottle.run(host="0.0.0.0", port=8888)
