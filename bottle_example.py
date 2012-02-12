@@ -10,6 +10,7 @@ def get_user():
 def unauthorized():
     bottle.response = 403
 
+# One-Liner: declare how you want to get your user and how you'd like to handle unauthorized access
 require_user = RequireAuth(get_user, unauthorized)
 
 @bottle.get('/')
@@ -17,8 +18,8 @@ def index():
     return "This is the public home page"
 
 @bottle.get('/magic/resource/<resource_id>')
-@require_user
-def user_account(user, resource_id):
+@require_user # <-- this is the awesome magic
+def user_account(user, resource_id): # <-- the 'user' arg is provided by the decorator
     # notice the user object is automagically available
     return "Hi %s - welcome to resource %s" % (user["name"], resource_id)
 
