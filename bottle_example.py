@@ -7,6 +7,9 @@ def get_user():
         "description": "Usually you would look up a user with a session cookie"
         }
 
+def mock_get_no_user():
+    return None
+
 def unauthorized():
     bottle.response.status = 403
     return "You can't access this resource"
@@ -23,6 +26,13 @@ def index():
 def user_account(user, resource_id): # <-- the 'user' arg is provided by the decorator
     # notice the user object is automagically available
     return "Hi %s - welcome to resource %s" % (user["name"], resource_id)
+
+mock_no_user = RequireAuth(mock_get_no_user, unauthorized)
+
+@bottle.get('/rejected')
+@mock_no_user
+def no_user_account(user):
+    return "This flow will never be called"
 
 @bottle.get('/nomagic/resource/<resource_id>')
 def user_account_oldschool(resource_id):
